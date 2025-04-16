@@ -2,11 +2,11 @@ import fastify from "fastify"; // Importa o fastify
 import { env } from "./env";
 import { passwordsRoutes } from "./routes/passwords";
 
-const app = fastify() // Cria a instância do fastfy
+const app = fastify()
 
 app.register(passwordsRoutes, {
     prefix: 'passwords'
-}) // Chama as endpoints no plugin de transactionsRoutes
+})
 
 app.listen({
     port: env.PORT
