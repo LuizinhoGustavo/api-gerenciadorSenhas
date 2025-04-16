@@ -5,11 +5,21 @@ import { z } from "zod"
 
 export async function passwordsRoutes(app: FastifyInstance){
     // GET
-    app.get('/', async () => {
-        const data = knex('passwords').select('*')
-
-        return data
+    app.get('/', async (request, reply) => {
+        const { search } = request.query as { search?: string }
+    
+        let data
+    
+        if (search) {
+            data = await knex('passwords')
+                .where('titulo', 'like', `%${search}%`)
+        } else {
+            data = await knex('passwords').select('*')
+        }
+    
+        return reply.send(data)
     })
+    
 
     // POST
     app.post('/', async (request, reply) => {
